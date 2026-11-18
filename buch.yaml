@@ -1,0 +1,24 @@
+# Angaben zum Buch. Gilt für Website und E-Book.
+titel: Seelenhäppli
+untertitel: ""                         # optional
+herausgeber: PLATZHALTER Herausgeber   # TODO: ersetzen
+sprache: de-CH
+beschreibung: >-
+  PLATZHALTER: Hier steht eine kurze Beschreibung der Sammlung. Sie erscheint
+  auf der Startseite und in den Metadaten des E-Books.
+
+# Höchstlänge pro Text: Zeichen mit Leerzeichen, inklusive Titel, Untertitel,
+# Autor und Fussnoten.
+max_zeichen: 4500
+
+# Reihenfolge der Texte: Dateinamen aus texte/ ohne «.docx».
+# Texte, die hier fehlen, kommen alphabetisch ans Ende (mit Warnung).
+reihenfolge:
+  - Beispiel_Meier_Grau
+  - Beispiel_Bernasconi_Drei-Stationen
+  - Beispiel_Steiner_Funktionieren
+  - Beispiel_Demir_Das-Wochenende
+  - Beispiel_Roth_Siebzehn-Uhr
+  - Beispiel_Keller_Was-waere-wenn
+  - Beispiel_Huber_Brief-an-Noemi
+  - Beispiel_Wyss_Der-Stuhlkreis

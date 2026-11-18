@@ -1,0 +1,87 @@
+/* Website: schlicht, Serifenschrift für den Fliesstext. */
+
+:root {
+  --md-text-font: "Iowan Old Style", "Palatino Linotype", Palatino, "Book Antiqua", Georgia, serif;
+}
+
+.md-typeset {
+  font-size: 0.9rem;
+  line-height: 1.6;
+}
+
+.md-typeset h1,
+.md-typeset h2,
+.md-typeset h3 {
+  font-weight: normal;
+}
+
+.md-typeset h2 {
+  font-style: italic;
+}
+
+/* Lesespalte nicht zu breit */
+.md-content__inner {
+  max-width: 34rem;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.md-typeset p.untertitel {
+  font-size: 1.15em;
+  font-style: italic;
+  margin: -0.6em 0 0.4em;
+}
+
+.md-typeset .autor {
+  font-variant: small-caps;
+  letter-spacing: 0.04em;
+}
+
+.md-typeset p.autor {
+  margin: 0 0 2em;
+}
+
+/* Inhaltsverzeichnis: Autor leicht abgesetzt nach dem Titel */
+.md-typeset li .autor {
+  color: var(--md-default-fg-color--light);
+  margin-left: 0.4em;
+}
+
+/* Textseiten (erkennbar an der Autorzeile): Absätze ohne Abstand, mit Erstzeileneinzug –
+   ausser nach Überschriften und Zitaten. */
+.md-content__inner:has(> p.autor) > p {
+  hyphens: auto;
+  margin: 0;
+  text-align: justify;
+}
+
+.md-content__inner:has(> p.autor) > p + p {
+  text-indent: 1.2em;
+}
+
+.md-content__inner:has(> p.autor) > p.autor,
+.md-content__inner:has(> p.autor) > p.untertitel,
+.md-content__inner:has(> p.autor) > p.autor + p {
+  text-align: left;
+  text-indent: 0;
+}
+
+.md-content__inner:has(> p.autor) > p.untertitel {
+  margin: -0.6em 0 0.4em;
+}
+
+.md-content__inner:has(> p.autor) > p.autor {
+  margin: 0 0 2em;
+}
+
+.md-typeset blockquote {
+  border-left: 0;
+  color: inherit;
+  font-size: 0.93em;
+  margin: 1em 1.5em;
+  padding: 0;
+}
+
+.md-typeset .md-button {
+  font-family: var(--md-text-font-family);
+}

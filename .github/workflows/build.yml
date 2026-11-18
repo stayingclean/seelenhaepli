@@ -1,0 +1,74 @@
+name: Büchlein bauen
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  PANDOC_VERSION: "3.14"
+  EPUBCHECK_VERSION: "5.4.0"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: astral-sh/setup-uv@v10.3.3
+
+      - name: Pandoc und epubcheck installieren
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release download "$PANDOC_VERSION" --repo jgm/pandoc \
+            --pattern "pandoc-*-amd64.deb" --dir "$RUNNER_TEMP"
+          sudo dpkg -i "$RUNNER_TEMP"/pandoc-*-amd64.deb
+          gh release download "v$EPUBCHECK_VERSION" --repo w3c/epubcheck \
+            --pattern "epubcheck-*.zip" --dir "$RUNNER_TEMP"
+          unzip -q "$RUNNER_TEMP"/epubcheck-*.zip -d "$RUNNER_TEMP"
+          mkdir -p "$HOME/.local/bin"
+          printf '#!/bin/sh\nexec java -jar "%s" "$@"\n' \
+            "$RUNNER_TEMP/epubcheck-$EPUBCHECK_VERSION/epubcheck.jar" > "$HOME/.local/bin/epubcheck"
+          chmod +x "$HOME/.local/bin/epubcheck"
+          echo "$HOME/.local/bin" >> "$GITHUB_PATH"
+          pandoc --version | head -n 1
+
+      - name: Stil prüfen
+        run: |
+          uv run ruff check
+          uv run ruff format --check
+
+      - name: Tests
+        run: uv run pytest
+
+      # Bei Pull Requests schlagen Warnungen fehl, auf main blockieren sie die Website nicht.
+      - name: Website und E-Book bauen
+        run: uv run buechlein build ${{ github.event_name == 'pull_request' && '--streng' || '' }}
+
+      - uses: actions/upload-pages-artifact@v5
+        if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
+        with:
+          path: build/website/site
+
+  deploy:
+    if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/deploy-pages@v5
+        id: deployment

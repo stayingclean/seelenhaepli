@@ -1,0 +1,120 @@
+/* E-Book: Serifenschrift, Erstzeileneinzug ausser nach Überschriften, Zitate eingerückt. */
+
+body {
+  font-family: "Iowan Old Style", Palatino, "Palatino Linotype", "Book Antiqua", Georgia, serif;
+  line-height: 1.45;
+  margin: 0 5%;
+  hyphens: auto;
+  -webkit-hyphens: auto;
+  -epub-hyphens: auto;
+}
+
+h1,
+h2,
+h3 {
+  font-weight: normal;
+  line-height: 1.2;
+  hyphens: none;
+  -webkit-hyphens: none;
+  -epub-hyphens: none;
+  text-align: left;
+}
+
+h1 {
+  font-size: 1.6em;
+  margin: 2em 0 0.4em;
+}
+
+h2 {
+  font-size: 1.15em;
+  font-style: italic;
+  margin: 1.6em 0 0.5em;
+}
+
+h3 {
+  font-size: 1em;
+  font-style: italic;
+  margin: 1.2em 0 0.4em;
+}
+
+/* Absätze ohne Abstand, dafür mit Einzug – aber nur, wenn ein Absatz vorausgeht. */
+p {
+  margin: 0;
+  text-align: justify;
+  text-indent: 0;
+  orphans: 2;
+  widows: 2;
+}
+
+p + p {
+  text-indent: 1.2em;
+}
+
+p.untertitel {
+  font-size: 1.1em;
+  font-style: italic;
+  text-align: left;
+}
+
+p.autor {
+  font-variant: small-caps;
+  letter-spacing: 0.04em;
+  margin: 0.6em 0 2em;
+  text-align: left;
+}
+
+p.untertitel + p,
+p.autor + p {
+  text-indent: 0;
+}
+
+blockquote {
+  font-size: 0.93em;
+  margin: 1em 1.5em;
+}
+
+/* Fussnoten am Kapitelende */
+section.footnotes {
+  font-size: 0.85em;
+  margin-top: 2em;
+}
+
+section.footnotes hr {
+  border: 0;
+  border-top: 1px solid;
+  margin: 0 0 0.8em;
+  width: 25%;
+}
+
+section.footnotes p + p {
+  text-indent: 0;
+}
+
+a {
+  color: inherit;
+}
+
+img {
+  max-width: 100%;
+}
+
+/* Titelseite */
+h1.title {
+  font-size: 2.2em;
+  margin-top: 25%;
+  text-align: center;
+}
+
+p.subtitle,
+p.edt,
+p.author,
+p.publisher {
+  text-align: center;
+  text-indent: 0;
+}
+
+p.subtitle {
+  font-size: 1.2em;
+  font-style: italic;
+  margin-bottom: 3em;
+}

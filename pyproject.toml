@@ -1,0 +1,41 @@
+[project]
+name = "buechlein"
+version = "0.1.0"
+description = "Macht aus Word-Texten eine Website und ein E-Book"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "pyyaml>=6",
+    "zensical",
+]
+
+[project.scripts]
+buechlein = "buechlein.cli:main"
+
+[dependency-groups]
+dev = [
+    "pytest>=8",
+    "ruff>=0.8",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/buechlein"]
+
+[tool.ruff]
+line-length = 100
+src = ["src", "tests"]
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "UP", "B", "SIM", "ANN", "RUF"]
+# Deutsche Typografie («», –) ist gewollt und nicht «mehrdeutig».
+ignore = ["RUF001", "RUF002", "RUF003"]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/*" = ["ANN"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
